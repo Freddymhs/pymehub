@@ -1,0 +1,51 @@
+{
+  "project": "pymehub",
+  "tech": "Monorepo: NestJS 11 (apps/api) + Next.js 16 (apps/web) + stubs (apps/fondos, apps/analytics). Postgres 16 + Redis 7 + BullMQ + Supabase.",
+  "current_phase": "FASE_0",
+  "generated_at": "2026-08-01",
+  "phases": {
+    "FASE_0": {
+      "status": "completed",
+      "tasks": 7,
+      "total": 7,
+      "description": "Scaffold monorepo + clones de templates + draft resume.json + git init"
+    },
+    "FASE_1": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 7,
+      "description": "apps/api: NestJS ETL ChileCompra end-to-end con BullMQ + Circuit Breaker + Prisma 7. F1 PROTEGIDO."
+    },
+    "FASE_2": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 7,
+      "description": "apps/web: Next.js 16 BFF + RSC + Server Actions + Supabase auth + shadcn/ui + Zustand"
+    },
+    "FASE_3": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 2,
+      "description": "apps/fondos: stub aiGenerated (declarativo, sin código real)"
+    },
+    "FASE_4": {
+      "status": "blocked",
+      "tasks": 0,
+      "total": 2,
+      "description": "apps/analytics: stub aiGenerated. Bloqueado por datos (FASE_1 ≥3 meses)",
+      "unblock_condition": "FASE_1 acumulando datos >= 3 meses"
+    },
+    "FASE_5": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 6,
+      "description": "Hardening: CI GitHub Actions + Dockerfile prod + Railway deploy + monitoring + rate limiting + backup"
+    }
+  },
+  "total_tasks": 31,
+  "sprint_plan": {
+    "sprint_1": ["FASE_1"],
+    "sprint_2": ["FASE_2"],
+    "sprint_3_plus": ["FASE_5"]
+  }
+}

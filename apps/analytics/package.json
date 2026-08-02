@@ -1,0 +1,12 @@
+{
+  "name": "@pymehub/analytics",
+  "version": "0.0.1",
+  "private": true,
+  "description": "pymehub analytics — ML ranking + RAG + SNA (aiGenerated stub)",
+  "scripts": {
+    "dev:noop": "echo 'analytics is aiGenerated stub — implementation deferred to F4'",
+    "build": "echo 'noop'",
+    "lint": "echo 'noop'",
+    "test": "echo 'noop'"
+  }
+}

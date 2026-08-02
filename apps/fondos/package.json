@@ -1,0 +1,12 @@
+{
+  "name": "@pymehub/fondos",
+  "version": "0.0.1",
+  "private": true,
+  "description": "pymehub fondos — scraper fondos concursables (aiGenerated stub)",
+  "scripts": {
+    "dev:noop": "echo 'fondos is aiGenerated stub — implementation deferred to F3'",
+    "build": "echo 'noop'",
+    "lint": "echo 'noop'",
+    "test": "echo 'noop'"
+  }
+}
