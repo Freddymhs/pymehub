@@ -24,14 +24,10 @@ Implementar `apps/api` con ETL diario de ChileCompra → Postgres + Redis (BullM
 
 ### Tarea 1.1: Migrar `class-validator` → `zod` + Jest → Vitest
 
-- Archivo: `apps/api/package.json` (modificar deps), `apps/api/src/main.ts`, `apps/api/src/app.module.ts`
-- Qué hacer:
-  - Remover: `class-validator`, `class-transformer`, `jest`, `@types/jest`, `ts-jest`, `supertest`, `@nestjs/testing` (este último mantener — Vitest lo usa).
-  - Agregar: `zod`, `vitest`, `@vitest/coverage-v8`.
-  - Reemplazar `ValidationPipe` global por custom `ZodValidationPipe` que use schemas Zod.
-  - Reemplazar todos los DTOs `class-validator` por schemas Zod en `apps/api/src/modules/*/dto/`.
-  - Actualizar `apps/api/test/jest-e2e.json` → `apps/api/vitest.config.ts`.
-- Referencia: patrón en `/DEVELOPMENT/ParaPymes/apps/ct-core-api/` (allí se usa class-validator, revisar para entender el delta).
+- Estado: ✅ **HECHO en scaffold (FASE_0, commit `03fdae9`)**.
+- Solo ref. cruzada desde FASE_1; no requiere acción adicional.
+- Diferencia con ParaPymes original: `validation.pipe.ts` reescrito como `ZodValidationPipe`, `app.module.ts` lo inyecta via `useClass` (en lugar de `GLOBAL_VALIDATION_PIPE` factory), DTOs convertidos a `z.object` con `z.infer<>` para tipado.
+- Gotcha a recordar (regla en `CLAUDE.md` § NestJS + Vitest): vite-node NO emite decorator metadata. Cualquier `@Injectable()` que reciba `@Inject(Token)` por constructor **debe llevar `@Inject(Token)` explícito** en cada parámetro — sin esto los mocks de Vitest se inyectan como `undefined`. Aplica a `apps/api/src/modules/example/example.service.ts` y `apps/api/src/health/health.controller.ts` ya migrados.
 
 ### Tarea 1.2: Prisma schema + migración inicial
 
@@ -110,7 +106,7 @@ Implementar `apps/api` con ETL diario de ChileCompra → Postgres + Redis (BullM
 - [ ] Re-correr job → count no aumenta (idempotencia OK)
 - [ ] Circuit Breaker abre tras matar ChileCompra upstream (test `chile-compra.client.spec.ts`)
 - [ ] `pnpm test` verde, coverage ≥70%
-- [ ] Sin uso de `class-validator` ni `Jest` en `apps/api/`
+- [x] Sin uso de `class-validator` ni `Jest` en `apps/api/` (migrado en scaffold, ver Tarea 1.1)
 
 ## Riesgos / Notas
 

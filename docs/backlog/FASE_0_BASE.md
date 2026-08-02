@@ -19,7 +19,7 @@ Scaffold del monorepo + clonado de templates + plantado del concepto + draft en 
 
 - Archivo: `apps/api/` (creado desde template)
 - Hecho: clone de `Freddymhs/template-nest`. Renombrado `package.json` → `@pymehub/api`.
-- Pendiente para F1: migrar `class-validator` → `zod`, Jest → Vitest.
+- Hecho (durante scaffold, antes de commit `03fdae9`): reemplazo de `class-validator` + `class-transformer` por `zod` (pipe custom `ZodValidationPipe`), y de Jest por Vitest (manteniendo `@nestjs/testing` para módulos). Detalle en Tarea 1.1 de `FASE_1_api-etl-chilecompra.md` (ahora ref: cruzada).
 
 ### Tarea 0.3: Clonar `template-nextjs-fullstack` → `apps/web`
 
@@ -46,12 +46,12 @@ Scaffold del monorepo + clonado de templates + plantado del concepto + draft en 
 
 - Archivo: `.git/`
 - Hecho: 1 repo en `DEVELOPMENT/pymehub/.git/` (NO sub-repos por app).
-- Sin commits todavía (usuario revisa antes de stagear).
+- 1 commit al cierre del precommit retroactivo: `03fdae9 feat: scaffold pymehub v2 — monorepo 4 apps, aiGenerated stubs fondos+analytics`.
 
 ## Criterios de Aceptación
 
 - [x] Monorepo compila con `pnpm install` en root
-- [x] `apps/api` levanta con `pnpm dev` (template default)
+- [x] `apps/api` levanta con `pnpm dev` (NestJS 11 + Zod + Vitest, post-migración scaffold)
 - [x] `apps/web` levanta con `pnpm dev` (template default)
 - [x] `apps/fondos` + `apps/analytics` ejecutan `dev:noop` sin error
 - [x] `_CONCEPTO.md` plantado con puntero al origen

@@ -1,162 +1,60 @@
-# Next.js Fullstack Template
+# @pymehub/web
 
-Production-ready Next.js 16 starter with TypeScript, TailwindCSS 4, and best practices baked in.
+Dashboard BFF para PYMEs chilenas proveedoras del Estado. Next.js 16 con App Router,
+RSC puro + Server Actions, shadcn/ui + Radix, Zustand para client state, Supabase para auth.
 
-## Stack
-
-- **Next.js 16** (App Router, Turbopack)
-- **React 19** (Server Components by default)
-- **TypeScript** (Strict mode)
-- **TailwindCSS 4** + PostCSS
-- **ESLint 9** (flat config, core-web-vitals + typescript + prettier)
-- **Prettier** (auto-format on commit)
-- **Husky + lint-staged** (pre-commit quality gate)
-- **Vitest + happy-dom** (unit/component testing)
-- **Sonner** (toast notifications)
-- **Security headers** (X-Frame-Options, CSP, etc.)
-
-## Getting Started
+## Quick start
 
 ```bash
-# Clone
-gh repo create my-project --template Freddymhs/template-nextjs-fullstack
-# or
-npx degit Freddymhs/template-nextjs-fullstack my-project
-
-# Install
-cd my-project
+# 1. Instalar deps
 pnpm install
 
-# Dev
+# 2. Variables de entorno (Supabase)
+cp .env.example .env.local
+# editar .env.local: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+# 3. Dev (puerto 3001)
 pnpm dev
 ```
 
-## Rendering Strategies
+## Stack
 
-This template includes demo pages for every Next.js rendering pattern:
+- **Next.js 16** (App Router, RSC puro + Server Actions)
+- **React 19** (Server Components by default)
+- **TypeScript** strict
+- **TailwindCSS 4**
+- **shadcn/ui + Radix** (componentes accesibles)
+- **Zustand** (client state efímero)
+- **Supabase** (auth + Postgres + RLS)
+- **Vitest + happy-dom** (testing)
+- **Playwright** (e2e — FASE_2)
 
-| Route        | Strategy      | Description                                         |
-| ------------ | ------------- | --------------------------------------------------- |
-| `/`          | **RSC**       | React Server Component (default)                    |
-| `/ssr`       | **SSR**       | Server-Side Rendering (`dynamic = "force-dynamic"`) |
-| `/ssg`       | **SSG**       | Static Site Generation (`dynamic = "force-static"`) |
-| `/isr`       | **ISR**       | Incremental Static Regeneration (`revalidate = 60`) |
-| `/csr`       | **CSR**       | Client-Side Rendering (`"use client"`)              |
-| `/api/hello` | **API Route** | JSON API endpoint (GET + POST)                      |
+## Arquitectura: BFF
+
+`apps/web` actúa como Backend-For-Frontend: agrega respuestas de `apps/api`,
+hace auth check contra Supabase, y nunca expone el cliente api al browser.
+
+Las rutas autenticadas viven bajo `src/app/(authed)/`. El middleware de Supabase
+protege ese segmento.
 
 ## Scripts
 
-| Command             | Description                  |
-| ------------------- | ---------------------------- |
-| `pnpm dev`          | Start dev server (Turbopack) |
-| `pnpm build`        | Production build             |
-| `pnpm start`        | Start production server      |
-| `pnpm lint`         | Run ESLint                   |
-| `pnpm lint:fix`     | Fix lint issues              |
-| `pnpm format`       | Format with Prettier         |
-| `pnpm format:check` | Check formatting             |
-| `pnpm type-check`   | TypeScript type checking     |
-| `pnpm test`         | Run tests (watch mode)       |
-| `pnpm test:run`     | Run tests (single run)       |
+| Script          | Descripcion                              |
+| --------------- | ---------------------------------------- |
+| `pnpm dev`      | Dev server en :3001                      |
+| `pnpm build`    | Build producción                         |
+| `pnpm start`    | Ejecutar build                           |
+| `pnpm lint`     | ESLint + Prettier                        |
+| `pnpm test`     | Vitest unit/component                    |
+| `pnpm test:e2e` | Playwright e2e (FASE_2)                  |
 
-## Project Structure
+## Migración pendiente desde template
 
-```
-src/
-  app/              # App Router pages & layouts
-    api/            # API routes
-    ssr/            # SSR demo
-    ssg/            # SSG demo
-    isr/            # ISR demo
-    csr/            # CSR demo
-  components/       # Reusable components
-    ui/             # Base UI components
-  lib/
-    constants/      # Centralized constants
-    utils/          # Utility functions
-  types/            # Shared TypeScript types
-```
+Por defecto `template-nextjs-fullstack` trae rutas demo (`/ssr`, `/ssg`, `/isr`,
+`/csr`, `/api/hello`) para mostrar cada patrón de rendering. **Estas rutas se
+eliminan en FASE_2** porque no aportan al producto — pymehub usa RSC puro +
+Server Actions (ver `docs/_CONCEPTO.md`).
 
-## Testing
+## Licencia
 
-| Command         | Description                     |
-| --------------- | ------------------------------- |
-| `pnpm test:run` | Unit tests (Vitest + happy-dom) |
-| `pnpm test:e2e` | E2e tests (Playwright)          |
-
-## Conventions
-
-- `@/` path alias for `src/`
-- Named exports for components
-- `PascalCase` components, `camelCase` functions, `kebab-case` files
-- `const` only — no `let`
-- Strict TypeScript — no `any`
-
----
-
-## Verificación
-
-Todo lo siguiente está comprobado y funcionando al 100%.
-
-### Calidad de código
-
-| Check             | Comando           |
-| ----------------- | ----------------- |
-| Lint              | `pnpm lint`       |
-| Tipado estricto   | `pnpm type-check` |
-| Build (Turbopack) | `pnpm build`      |
-
-### Tests unitarios (11/11)
-
-```bash
-pnpm test:run
-```
-
-| Suite                         | Cubre                                                                |
-| ----------------------------- | -------------------------------------------------------------------- |
-| `utils/index.test.ts` (3)     | `cn()`: join, falsy filter, sin args                                 |
-| `api/hello/route.test.ts` (4) | GET message + ISO timestamp, POST echo body + nested body            |
-| `constants/index.test.ts` (2) | `APP_NAME` tipo string no vacío, valor exacto                        |
-| `error-boundary.test.tsx` (2) | `getDerivedStateFromError` setea `hasError: true` + preserva message |
-
-### Tests e2e (16/16)
-
-```bash
-pnpm build && pnpm test:e2e
-```
-
-| Suite              | Cubre                                                     |
-| ------------------ | --------------------------------------------------------- |
-| `home.spec.ts` (4) | Título, 4 links de estrategia, referencia API, navegación |
-| `ssr.spec.ts` (3)  | Heading, server timestamp, back link                      |
-| `ssg.spec.ts` (2)  | Heading + build time, back link                           |
-| `isr.spec.ts` (2)  | Heading + revalidación 60s, back link                     |
-| `csr.spec.ts` (3)  | Heading + client time, counter +/-, back link             |
-| `api.spec.ts` (2)  | GET JSON shape, POST echo                                 |
-
-### Runtime verificado en navegador
-
-| Ruta             | Resultado                                                             |
-| ---------------- | --------------------------------------------------------------------- |
-| `GET /`          | RSC renderizado en server, 4 cards de estrategia visibles             |
-| `GET /ssr`       | Timestamp fresco en cada request (`force-dynamic`)                    |
-| `GET /ssg`       | Timestamp fijo del build time (`force-static`)                        |
-| `GET /isr`       | Timestamp estático + nota "Revalidates every 60s" (`revalidate = 60`) |
-| `GET /csr`       | Clock en tiempo real + counter interactivo sin hydration error        |
-| `GET /api/hello` | JSON `{ message, timestamp }`                                         |
-| Ruta inexistente | 404 custom con botón "Go home"                                        |
-
-### CI (GitHub Actions)
-
-`pnpm install` → `pnpm lint` → `pnpm type-check` → `pnpm build` → `pnpm test:run` → `playwright install chromium` → `pnpm test:e2e`  
-Corre en cada push y PR a main/master.
-
-### Pipeline de commits (local)
-
-`git commit` → husky → lint-staged → `eslint --fix` + `prettier --write` (solo archivos staged)
-
-### Gaps conocidos
-
-- **Sin Docker**: no incluido en este template — el deploy habitual es Vercel (`next build` + `next start` o export estático)
-- **Sin auth**: no incluido — se agrega por proyecto
-- **E2e en CI requiere build previo**: el `webServer` en Playwright config usa `pnpm start` en CI, así que el job hace `pnpm build` antes de `pnpm test:e2e`
+Privado.

@@ -82,7 +82,7 @@ Cubierto por Tarea 2.5. Si la action crece, extraer a `apps/web/src/lib/actions/
 
 ## Criterios de Aceptación
 
-- [ ] `pnpm dev` levanta web en :3000 sin error
+- [ ] `pnpm dev` levanta web en :3001 sin error (puerto configurado en `apps/web/package.json` para no chocar con api en :3000)
 - [ ] `/login` funciona con Supabase email/password (o magic link)
 - [ ] `/dashboard` requiere auth (redirect a `/login` si no)
 - [ ] `/dashboard` lista licitaciones reales desde api (data flow end-to-end)
