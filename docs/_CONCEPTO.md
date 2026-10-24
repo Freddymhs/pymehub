@@ -11,7 +11,7 @@
 
 Reimplementación de ParaPymes (ecosistema de 4 apps para PYMEs chilenas proveedoras del Estado) con stack más barato y mantenible. Mantiene la superficie de 4 servicios (api + web + fondos + analytics) para no perder el brand en CV, pero **solo implementa 2** (api + web). `fondos` + `analytics` quedan como stubs aiGenerated (carpeta + package.json mínimo) — descripciones aspiracionales, sin código real.
 
-Es la **v2 repensada** del proyecto `/DEVELOPMENT/ParaPymes/`, nacido del análisis de los BUNDLE dumps en `/DEVELOPMENT/repensandoParaPymes/`.
+Es la **v2 repensada** del proyecto `/DEVELOPMENT/ParaPymes/`.
 
 ## Que es / Que no es
 
